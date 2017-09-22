@@ -5,7 +5,7 @@
 type Item {
   id: ID! @isUnique
   name: String!
-  inBasket: Basket @relation(name: "ItemsInBasket")
+  inBasket: [Basket!]! @relation(name: "ItemsInBasket")
   description: String
   imageUrl: String
   price: Int!

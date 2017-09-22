@@ -17,13 +17,13 @@ types: ./types.graphql
 
 # uncomment this:
 
-# functions:
-#   hello:
-#     handler:
-#       code:
-#         src: ./code/hello.js
-#     type: resolver
-#     schema: ./code/hello.graphql
+functions:
+  hello:
+    handler:
+      code:
+        src: ./src/hello.js
+    type: resolver
+    schema: ./src/hello.graphql
 
  
 # Graphcool modules
