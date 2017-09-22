@@ -27,16 +27,17 @@ const Basket = (props) => {
           <Item key={item.id} item={item}/>
         })}
       </div>
-      <div className='pointer' onClick={() => {
+      <div className='pointer' onClick={async () => {
         const basketId = process.browser ? localStorage.getItem('gc-webshop-basket') : null
         const userId = process.browser ? localStorage.getItem('gc-webshop-userid') : null
 
         if (basketId && userId) {
-          props.mutate({
-            vairables: {
+          await props.mutate({
+            variables: {
               basketId, userId
             }
           })
+          props.url.push('/')
         }
         console.log()
       }}>Place Order</div>
