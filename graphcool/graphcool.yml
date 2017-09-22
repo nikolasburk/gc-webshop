@@ -1,21 +1,4 @@
-# Welcome to Graphcool!
-#
-# This file is the main config file for your Graphcool Project.
-# It's very minimal at this point and uses default values.
-# We've included a hello world function here.
-# Just uncomment it and run `graphcool deploy`
-#
-# Check out some examples:
-#    github.com/graphcool/examples
-#
-# Happy Coding!
-
-
-# GraphQL types
 types: ./types.graphql
-
-
-# uncomment this:
 
 functions:
   pay:
@@ -27,11 +10,8 @@ functions:
     type: resolver
     schema: ./src/pay.graphql
 
- 
-# Graphcool modules
 modules: 
   auth0: modules/auth0/graphcool.yml
-
 
 # Model/Relation permissions
 permissions:
@@ -93,7 +73,5 @@ permissions:
 #  - operation: UserBaskets.*
 #  - operation: UserOrders.*
 
-  
-# Permanent Auth Token / Root Tokens
 rootTokens: []
 
