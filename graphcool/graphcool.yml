@@ -1,6 +1,7 @@
 types: ./types.graphql
 
 functions:
+
   pay:
     handler:
       webhook:
@@ -10,7 +11,17 @@ functions:
     type: resolver
     schema: ./src/pay.graphql
 
-modules: 
+  sendConfirmEmail:
+    handler:
+      code:
+        src: ./src/sendConfirmEmail.js
+        environment:
+          MAILGUN_API_KEY: ${env:MAILGUN_API_KEY}
+          MAILGUN_DOMAIN: ${env:MAILGUN_DOMAIN}
+    type: subscription
+    query: ./src/sendConfirmEmail.graphql
+
+modules:
   auth0: modules/auth0/graphcool.yml
 
 # Model/Relation permissions

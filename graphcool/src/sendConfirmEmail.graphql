@@ -1,0 +1,14 @@
+subscription {
+  Order(filter: {
+    mutation_in: UPDATED
+    node: {
+      orderedAt_not: null
+    }
+  }) {
+    node {
+      user {
+        email
+      }
+    }
+  }
+}
