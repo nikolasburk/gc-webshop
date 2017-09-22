@@ -1,0 +1,40 @@
+# This file contains the GraphQL Types
+
+# All types need to have the three fields id, updatedAt and createdAt like this:
+
+type Item {
+  id: ID! @isUnique
+  name: String!
+  inBasket: Basket @relation(name: "ItemsInBasket")
+  description: String
+  imageUrl: String
+  price: Int!
+  ratingInfo: RatingInfo @relation(name: "ItemRatingInfo")
+}
+
+type Basket {
+  id: ID! @isUnique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  items: [Item!]! @relation(name: "ItemsInBasket")
+  order: Order @relation(name: "BasketForOrder")
+  user: Auth0User @relation(name: "UsersBaskets")
+}
+
+type Order {
+  id: ID! @isUnique
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  basket: Basket @relation(name: "BasketForOrder")
+  user: Auth0User @relation(name: "UsersOrders")
+
+  deliveredAt: DateTime
+  orderedAt: DateTime
+}
+
+type RatingInfo {
+  id: ID! @isUnique
+  count: Int!
+  averageRating: Float!
+  item: Item! @relation(name: "ItemRatingInfo")
+}
