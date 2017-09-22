@@ -20,10 +20,8 @@ types: ./types.graphql
 functions:
   pay:
     handler:
-      code:
-        src: src/hello.js
       webhook:
-        url: https://graphcool-webshop-pavmwbnglq.now.sh
+        url: http://schema.ngrok.io
         headers:
           Content-Type: application/json
     type: resolver

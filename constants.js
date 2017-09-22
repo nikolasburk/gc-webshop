@@ -1,1 +1,0 @@
-export const LOGIN_URL = 'https://nikolasburk.eu.auth0.com/login?client=qH0YwC8HVoziTBUPADBugbfpq2N3U8Ay'

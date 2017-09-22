@@ -1,4 +1,4 @@
-
+const { request } = require('graphql-request')
 
 const query = `mutation {
   iPhone: createItem(
@@ -54,3 +54,4 @@ const query = `mutation {
   } 
 }`
 
+request(process.env.GRAPHCOOL_ENDPOINT, query).catch(console.error.bind(console))

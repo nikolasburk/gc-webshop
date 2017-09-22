@@ -3,7 +3,7 @@ import Header from '../components/Header'
 import ItemList from '../components/ItemList'
 
 import withData from '../lib/withData'
-import Auth from '../Auth'
+import Auth from '../lib/auth'
 
 export const auth = new Auth()
 
