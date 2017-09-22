@@ -2,14 +2,20 @@
   "name": "graphcool-webshop",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/pay.js",
+  "files": [
+    "src"
+  ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "micro"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "graphql-request": "^1.3.6"
+    "graphcool-lib": "^0.0.3",
+    "graphql-request": "^1.3.6",
+    "micro": "^9.0.0",
+    "stripe": "^5.0.0"
   }
 }
