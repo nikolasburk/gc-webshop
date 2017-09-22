@@ -1,23 +1,21 @@
 {
-  "event": {
-    "data": {
-      "orderId": "cj7wd8diwn1140150k0ql8uxh",
-      "stripeToken": "tok_1B4ycr2eZvKYlo2Cy4skdAiZ"
+  "data": {
+    "orderId": "cj7wd8diwn1140150k0ql8uxh",
+    "stripeToken": "tok_1B4ycr2eZvKYlo2Cy4skdAiZ"
+  },
+  "context": {
+    "request": {
+      "sourceIp": "80.137.35.29",
+      "headers": {},
+      "httpMethod": "post"
     },
-    "context": {
-      "request": {
-        "sourceIp": "80.137.35.29",
-        "headers": {},
-        "httpMethod": "post"
-      },
-      "auth": null,
-      "sessionCache": {},
-      "environment": {},
-      "graphcool": {
-        "projectId": "cj7vu6p1219540173k91ck9e0",
-        "alias": null,
-        "pat": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MDYwOTMzNjAsImNsaWVudElkIjoiY2l3ajBkc2V1MGY0bDAxMjJ1NDdzcXE1bSIsInByb2plY3RJZCI6ImNqN3Z1NnAxMjE5NTQwMTczazkxY2s5ZTAiLCJwZXJtYW5lbnRBdXRoVG9rZW5JZCI6ImNqN3cxM21kNjAxdGcwMTQ3aHRnazZ0ZW8ifQ.IZPRcffJI4VFmhHkS-NTRYYMnrL8LEdlSNscOkjQufU"
-      }
+    "auth": null,
+    "sessionCache": {},
+    "environment": {},
+    "graphcool": {
+      "projectId": "cj7vu6p1219540173k91ck9e0",
+      "alias": null,
+      "pat": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE1MDYwOTMzNjAsImNsaWVudElkIjoiY2l3ajBkc2V1MGY0bDAxMjJ1NDdzcXE1bSIsInByb2plY3RJZCI6ImNqN3Z1NnAxMjE5NTQwMTczazkxY2s5ZTAiLCJwZXJtYW5lbnRBdXRoVG9rZW5JZCI6ImNqN3cxM21kNjAxdGcwMTQ3aHRnazZ0ZW8ifQ.IZPRcffJI4VFmhHkS-NTRYYMnrL8LEdlSNscOkjQufU"
     }
   }
 }

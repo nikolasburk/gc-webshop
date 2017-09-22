@@ -1,7 +1,7 @@
 import {gql, graphql, compose} from 'react-apollo'
 import withData from '../lib/withData'
 import Item from '../components/Item'
-
+import Link from 'next/link'
 
 const Basket = (props) => {
 
@@ -22,28 +22,14 @@ const Basket = (props) => {
   console.log(props)
   return (
     <div className={'w-100 flex justify-center pa6'}>
+      <h1>Your BASKET</h1>
       <div className='w-100 flex flex-wrap' style={{maxWidth: 150}}>
-        {props.data.Basket.items.map(item => {
-          <Item key={item.id} item={item} />
-        })}
+        {props.data.Basket.items.map(item => <div><b>{item.name}</b>: ${item.price}</div>)}
       </div>
-      <div className='pointer' onClick={async () => {
-        console.log('Place order clicked')
-        const basketId = process.browser ? localStorage.getItem('gc-webshop-basket') : null
-        const userId = process.browser ? localStorage.getItem('gc-webshop-userid') : null
+      <Link prefetch href='/checkout'>
+        Checkout
+      </Link>
 
-        if (basketId && userId) {
-          console.log(`Place order`, basketId, userId)
-          await props.mutate({
-            variables: {
-              basketId, userId
-            }
-          })
-          console.log(`Created order`)
-          props.url.push('/')
-        }
-        console.log()
-      }}>Place Order</div>
     </div>
   )
 
@@ -57,15 +43,8 @@ const ITEMS_IN_BASKET = gql`
         name
         description
         imageUrl
+        price
       }
-    }
-  }
-`
-
-const CREATE_ORDER = gql`
-  mutation CreateOrder($basketId: ID!, $userId: ID!) {
-    createOrder(basketId: $basketId, userId: $userId) {
-      id
     }
   }
 `
@@ -77,9 +56,27 @@ const BasketContainer = compose(
         basketId: process.browser ? localStorage.getItem('gc-webshop-basket') : ""
       }
     }
-  }),
-  graphql(CREATE_ORDER)
+  })
 )(Basket)
 
 
 export default withData(BasketContainer)
+/*
+ <div className='pointer' onClick={async () => {
+ console.log('Place order clicked')
+ const basketId = process.browser ? localStorage.getItem('gc-webshop-basket') : null
+ const userId = process.browser ? localStorage.getItem('gc-webshop-userid') : null
+
+ if (basketId && userId) {
+ console.log(`Place order`, basketId, userId)
+ await props.mutate({
+ variables: {
+ basketId, userId
+ }
+ })
+ console.log(`Created order`)
+ props.url.push('/')
+ }
+ console.log()
+ }}>Place Order</div>
+ */

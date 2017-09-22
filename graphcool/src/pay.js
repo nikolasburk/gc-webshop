@@ -1,33 +1,34 @@
-const stripe = require('stripe')(process.env.STRIPE_KEY)
+const stripe = require('stripe')('sk_test_tzyYf46S1H3HZdhIrwcdslgI')
 const { fromEvent } = require('graphcool-lib')
 const { json } = require('micro')
 
 module.exports = async (req, res) => {
-  const {event} = await json(req)
+  const event = await json(req)
   const client = fromEvent(event)
   const api = client.api('simple/v1')
 
   const getOrder = orderId => {
     return api.request(
       `query getOrder($orderId: ID!) {
-      Order(id: $orderId) {
-        id
-        orderedAt
-        basket {
-          items {
+        Order(id: $orderId) {
+          id
+          orderedAt
+          basket {
+            items {
+              id
+              name
+              price
+            }
+          }
+          user {
             id
-            price
+            email
+            name
+            familyName
+            stripeCustomerId
           }
         }
-        user {
-          id
-          email
-          name
-          familyName
-          stripeCustomerId
-        }
-      }
-    }`,
+      }`,
       { orderId },
     )
   }

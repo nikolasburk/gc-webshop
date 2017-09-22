@@ -2,8 +2,7 @@
 import React from 'react'
 import StripeCheckout from 'react-stripe-checkout'
 // GraphQL
-import gql from 'graphql-tag'
-import { graphql } from 'react-apollo'
+import { graphql, compose, gql } from 'react-apollo'
 
 class Stripe extends React.Component {
 
@@ -13,73 +12,56 @@ class Stripe extends React.Component {
     this.onToken = this.onToken.bind(this)
   }
 
-  componentDidUpdate() {
-    // Get user id
-    const userId = this.props.user.id
-    // Load subscription for the first time
-    if (!this.purchaseSubscription) {
-      this.purchaseSubscription = this.props.subscription({
-        document: gql`
-          subscription($userId: ID!) {
-            User(filter: {
-              mutation_in: [UPDATED]
-              updatedFields_contains: "isPaid"
-              node: {
-                id: $userId
-                isPaid: true
-              }
-            }) {
-              node {
-                id
-              }
-            }
-          }
-        `,
-        variables: { userId },
-        updateQuery: (previousState, {}) => {
-          console.log('App upgraded')
-          // Important: Mark as a success so that the Failure ops don’t get called after 14 seconds (see onToken)
-          this.setState({ success: true })
-          // Important: cancel subscription.
-          this.purchaseSubscription()
-          // Success! Perform whatever success ops you need, here.
-          // ...
-        },
-        onError: (err) => console.error(err)
-      })
-    }
-  }
 
-  onToken(token) {
+  async onToken(token) {
     const stripeToken = token.id
     // Get user id
-    const userId = this.props.user.id
-    // Status is purchasing...
-    this.props.createStripe({ variables: { userId, stripeToken } })
-      .then(() => {
-        setTimeout(() => {
-          if (!this.state.success) {
-            // Failure. Perform whatever success ops you need, here.
-            // ...
-          }
-        }, 14000)
-      })
-      .catch((e) => { console.error(e) })
+    const userId = this.props.data.Auth0User.id
+    const basketId = process.browser ? localStorage.getItem('gc-webshop-basket') : null
+
+    if (userId && basketId) {
+      const createOrderResult = await this.props.createOrder({ variables: { userId, basketId } })
+      const paymentResult = await this.props.pay({ variables: { orderId: createOrderResult.data.createOrder.id, stripeToken} })
+      console.log(`result: `, paymentResult)
+      if (paymentResult.data.pay.success) {
+        this.props.url.push('/success')
+      } else {
+        console.log(`ERROR`)
+      }
+
+    } else {
+      console.log(`No user or basket`)
+    }
+
   }
 
   render() {
+
+    if (this.props.data.loading || this.props.data.Auth0User === null) {
+      return <div>Loading</div>
+    }
+
+    const amount = this.props.itemsInBasket ?
+      this.props.itemsInBasket.Basket.items.reduce((acc, curr) => acc + curr.price, 0) : 0
+
     return (
       <div>
+        <div>
+          <div>Items:</div>
+          {this.props.itemsInBasket && this.props.itemsInBasket.Basket &&
+          this.renderItems(this.props.itemsInBasket.Basket.items)
+          }
+          <b>SUM: ${amount}</b>
+        </div>
         <StripeCheckout
           name="My Demo App"
           description="It’s super duper awesome."
-          image="__IMAGE__"
           ComponentClass="div"
-          panelLabel="Upgrade"
-          amount={999}
+          panelLabel="Amount"
+          amount={amount * 100}
           currency="USD"
-          stripeKey="__STRIPE_PUBLIC_KEY__"
-          email={this.props.user.email}
+          stripeKey="pk_test_e8KuPYHUCxyz68Vk3fHBCrVw"
+          email={this.props.data.Auth0User.email}
           shippingAddress={false}
           billingAddress={true}
           zipCode={true}
@@ -89,19 +71,74 @@ class Stripe extends React.Component {
           reconfigureOnUpdate={false}
           triggerEvent="onClick"
         >
-          <div>Upgrade (US $9.99)</div>
+          <div style={{background: 'rgba(0,0,0,.1)', borderRadius: 2, padding: '2px 6px', display: 'inline-block', cursor: 'pointer', fontSize: 16}}>Go for it!</div>
         </StripeCheckout>
       </div>
     )
   }
+
+  renderItems(items) {
+    console.log('items', items)
+    return items.map(item => <div><b>{item.name}</b>: ${item.price}</div>)
+  }
 }
 
-const createStripe = gql`
-  mutation($userId: ID!, $stripeToken: String!) {
-    updateUser(id: $userId, stripeToken: $stripeToken) {
+const user = gql`
+  query UserQuer($userId: ID!) {
+    Auth0User(id: $userId) {
+      id
+      email
+    }
+  }
+`
+
+const CREATE_ORDER = gql`
+  mutation CreateOrder($basketId: ID!, $userId: ID!) {
+    createOrder(basketId: $basketId, userId: $userId) {
       id
     }
   }
 `
 
-export default graphql(createStripe, { name: 'createStripe' })(Stripe)
+const PAY = gql`
+  mutation Pay($orderId: String!, $stripeToken: String!) {
+    pay(orderId: $orderId, stripeToken: $stripeToken) {
+      success
+    }
+  }
+`
+
+
+const ITEMS_IN_BASKET = gql`
+  query ItemsInBasket($basketId: ID) {
+    Basket(id: $basketId) {
+      id
+      items {
+        id
+        name
+        description
+        imageUrl
+        price
+      }
+    }
+  }
+`
+
+export default compose(
+  graphql(user, {
+    options: {
+      variables: {
+        userId: process.browser ? localStorage.getItem('gc-webshop-userid') : ""
+      }
+    }
+  }),
+  graphql(CREATE_ORDER, { name: 'createOrder'}),
+  graphql(PAY, { name: 'pay'}),
+  graphql(ITEMS_IN_BASKET,
+    { name: 'itemsInBasket', options: {
+      variables: {
+        basketId: process.browser ? localStorage.getItem('gc-webshop-basket') : ""
+      }
+    }}
+  )
+)(Stripe)
