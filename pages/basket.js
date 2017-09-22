@@ -21,22 +21,25 @@ const Basket = (props) => {
 
   console.log(props)
   return (
-    <div>
-      <div>
+    <div className={'w-100 flex justify-center pa6'}>
+      <div className='w-100 flex flex-wrap' style={{maxWidth: 150}}>
         {props.data.Basket.items.map(item => {
-          <Item key={item.id} item={item}/>
+          <Item key={item.id} item={item} />
         })}
       </div>
       <div className='pointer' onClick={async () => {
+        console.log('Place order clicked')
         const basketId = process.browser ? localStorage.getItem('gc-webshop-basket') : null
         const userId = process.browser ? localStorage.getItem('gc-webshop-userid') : null
 
         if (basketId && userId) {
+          console.log(`Place order`, basketId, userId)
           await props.mutate({
             variables: {
               basketId, userId
             }
           })
+          console.log(`Created order`)
           props.url.push('/')
         }
         console.log()
@@ -66,7 +69,6 @@ const CREATE_ORDER = gql`
     }
   }
 `
-
 
 const BasketContainer = compose(
   graphql(ITEMS_IN_BASKET, {
