@@ -1,7 +1,10 @@
 module.exports = event => {
+
+  console.log(event)
   return {
     data: {
-      message: `Hello ${event.data.name || 'World'}`
+      success: true
     }
   }
 }
+

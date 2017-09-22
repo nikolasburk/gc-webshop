@@ -18,12 +18,16 @@ types: ./types.graphql
 # uncomment this:
 
 functions:
-  hello:
+  pay:
     handler:
       code:
-        src: ./src/hello.js
+        src: src/hello.js
+      webhook:
+        url: https://graphcool-webshop-pavmwbnglq.now.sh
+        headers:
+          Content-Type: application/json
     type: resolver
-    schema: ./src/hello.graphql
+    schema: ./src/pay.graphql
 
  
 # Graphcool modules
@@ -33,62 +37,63 @@ modules:
 
 # Model/Relation permissions
 permissions:
-# Basket permissions
-  - operation: Basket.create
-    authenticated: true
-  - operation: Basket.read
-    authenticated: true
-    query: permissions/Basket.graphql
-  - operation: Basket.update
-    authenticated: true
-    query: permissions/Basket.graphql
-  - operation: Basket.delete
-    authenticated: true
-    query: permissions/Basket.graphql
-
-# Item permissions
-  - operation: Item.read
-  - operation: Item.create
-    authenticated: true
-    query: permissions/Item.graphql
-  - operation: Item.update
-    authenticated: true
-    query: permissions/Item.graphql
-  - operation: Item.delete
-    authenticated: true
-    query: permissions/Item.graphql
-
-# Order permissions
-  - operation: Order.read
-    authenticated: true
-    query: permissions/Order.read.graphql
-  - operation: Order.create
-    authenticated: true
-    query: permissions/Order.create.graphql
-  - operation: Order.update
-    authenticated: true
-    query: permissions/Order.update-delete.graphql
-  - operation: Order.delete
-    authenticated: true
-    query: permissions/Order.update-delete.graphql
-
-# User permissions
-  - operation: Auth0User.read
-    authenticated: true
-  - operation: Auth0User.create
-  - operation: Auth0User.update
-    authenticated: true
-    query: permissions/User.update-delete.graphql
-  - operation: Auth0User.delete
-    authenticated: true
-    query: permissions/User.update-delete.graphql
-
-# Relation Permissions
-  - operation: ItemsInBasket.*
-  - operation: ItemRatingInfo.*
-  - operation: BasketForOrder.*
-  - operation: UserBaskets.*
-  - operation: UserOrders.*
+  - operation: "*"
+#  # Basket permissions
+#  - operation: Basket.create
+#    authenticated: true
+#  - operation: Basket.read
+#    authenticated: true
+#    query: permissions/Basket.graphql
+#  - operation: Basket.update
+#    authenticated: true
+#    query: permissions/Basket.graphql
+#  - operation: Basket.delete
+#    authenticated: true
+#    query: permissions/Basket.graphql
+#
+#  # Item permissions
+#  - operation: Item.read
+#  - operation: Item.create
+#    authenticated: true
+#    query: permissions/Item.graphql
+#  - operation: Item.update
+#    authenticated: true
+#    query: permissions/Item.graphql
+#  - operation: Item.delete
+#    authenticated: true
+#    query: permissions/Item.graphql
+#
+#  # Order permissions
+#  - operation: Order.read
+#    authenticated: true
+#    query: permissions/Order.read.graphql
+#  - operation: Order.create
+#    authenticated: true
+#    query: permissions/Order.create.graphql
+#  - operation: Order.update
+#    authenticated: true
+#    query: permissions/Order.update-delete.graphql
+#  - operation: Order.delete
+#    authenticated: true
+#    query: permissions/Order.update-delete.graphql
+#
+#  # User permissions
+#  - operation: Auth0User.read
+#    authenticated: true
+#  - operation: Auth0User.create
+#  - operation: Auth0User.update
+#    authenticated: true
+#    query: permissions/User.update-delete.graphql
+#  - operation: Auth0User.delete
+#    authenticated: true
+#    query: permissions/User.update-delete.graphql
+#
+#  # Relation Permissions
+#  - operation: ItemsInBasket.*
+#  - operation: ItemRatingInfo.*
+#  - operation: BasketForOrder.*
+#  - operation: UserBaskets.*
+#  - operation: UserOrders.*
 
   
 # Permanent Auth Token / Root Tokens
