@@ -1,12 +1,9 @@
 import React from 'react'
 import Item from '../components/Item'
 import { gql, graphql, compose } from 'react-apollo'
+// import { ITEMS_IN_BASKET } from './Header'
 
 class ItemList extends React.Component {
-
-  componentWillReceiveProps(nextProps) {
-
-  }
 
   render() {
     if (this.props.data.loading) {
@@ -18,7 +15,6 @@ class ItemList extends React.Component {
         </div>
       )
     }
-
 
     return (
       <div className={'w-100 flex justify-center pa6'}>
@@ -37,20 +33,33 @@ class ItemList extends React.Component {
     )
   }
 
-  _itemSelected = (itemId) => {
+  _itemSelected = async (itemId) => {
 
     const basketId = localStorage.getItem('gc-webshop-basket')
     if (!basketId) {
       console.log(`no basket`)
       return
     }
-    this.props.mutate({
+    await this.props.mutate({
       mutation: ADD_ITEM_TO_BASKET,
       variables: {
         itemId,
         basketId
-      }
+      },
+      // update: (store, response) => {
+      //   console.log(`update store`, store, response)
+      //   const data = store.readQuery({
+      //     query: ITEMS_IN_BASKET
+      //   })
+      //   console.log(`Current data: `, data)
+      //   data._allItemsMeta.count++
+      //   store.writeQuery({
+      //     query: ITEMS_IN_BASKET,
+      //     data
+      //   })
+      // }
     })
+    this.props.data.refetch()
 
   }
 }

@@ -8,6 +8,14 @@ var _taggedTemplateLiteral2 = require('babel-runtime/helpers/taggedTemplateLiter
 
 var _taggedTemplateLiteral3 = _interopRequireDefault(_taggedTemplateLiteral2);
 
+var _regenerator = require('babel-runtime/regenerator');
+
+var _regenerator2 = _interopRequireDefault(_regenerator);
+
+var _asyncToGenerator2 = require('babel-runtime/helpers/asyncToGenerator');
+
+var _asyncToGenerator3 = _interopRequireDefault(_asyncToGenerator2);
+
 var _getPrototypeOf = require('babel-runtime/core-js/object/get-prototype-of');
 
 var _getPrototypeOf2 = _interopRequireDefault(_getPrototypeOf);
@@ -40,16 +48,19 @@ var _reactApollo = require('react-apollo');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _jsxFileName = '/Users/nburk/Projects/graphcool/examples/next/with-apollo/components/ItemList.js';
+var _jsxFileName = '/Users/nburk/Projects/graphcool/examples/next/gc-webshop/components/ItemList.js';
 
 var _templateObject = (0, _taggedTemplateLiteral3.default)(['query AllItems {\n  allItems {\n    id\n    name\n    price\n    imageUrl\n    description\n  }\n}'], ['query AllItems {\n  allItems {\n    id\n    name\n    price\n    imageUrl\n    description\n  }\n}']),
     _templateObject2 = (0, _taggedTemplateLiteral3.default)(['\n  mutation AddToItemsInBasket($itemId: ID!, $basketId: ID!) {\n    addToItemsInBasket(inBasketBasketId: $basketId, itemsItemId: $itemId) {\n      itemsItem {\n        id\n      }\n    }\n  }\n'], ['\n  mutation AddToItemsInBasket($itemId: ID!, $basketId: ID!) {\n    addToItemsInBasket(inBasketBasketId: $basketId, itemsItemId: $itemId) {\n      itemsItem {\n        id\n      }\n    }\n  }\n']);
+
+// import { ITEMS_IN_BASKET } from './Header'
 
 var ItemList = function (_React$Component) {
   (0, _inherits3.default)(ItemList, _React$Component);
 
   function ItemList() {
-    var _ref;
+    var _ref,
+        _this2 = this;
 
     var _temp, _this, _ret;
 
@@ -59,63 +70,98 @@ var ItemList = function (_React$Component) {
       args[_key] = arguments[_key];
     }
 
-    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = ItemList.__proto__ || (0, _getPrototypeOf2.default)(ItemList)).call.apply(_ref, [this].concat(args))), _this), _this._itemSelected = function (itemId) {
+    return _ret = (_temp = (_this = (0, _possibleConstructorReturn3.default)(this, (_ref = ItemList.__proto__ || (0, _getPrototypeOf2.default)(ItemList)).call.apply(_ref, [this].concat(args))), _this), _this._itemSelected = function () {
+      var _ref2 = (0, _asyncToGenerator3.default)( /*#__PURE__*/_regenerator2.default.mark(function _callee(itemId) {
+        var basketId;
+        return _regenerator2.default.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                basketId = localStorage.getItem('gc-webshop-basket');
 
-      var basketId = localStorage.getItem('gc-webshop-basket');
-      if (!basketId) {
-        console.log('no basket');
-        return;
-      }
-      _this.props.mutate({
-        mutation: ADD_ITEM_TO_BASKET,
-        variables: {
-          itemId: itemId,
-          basketId: basketId
-        }
-      });
-    }, _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
+                if (basketId) {
+                  _context.next = 4;
+                  break;
+                }
+
+                console.log('no basket');
+                return _context.abrupt('return');
+
+              case 4:
+                _context.next = 6;
+                return _this.props.mutate({
+                  mutation: ADD_ITEM_TO_BASKET,
+                  variables: {
+                    itemId: itemId,
+                    basketId: basketId
+                    // update: (store, response) => {
+                    //   console.log(`update store`, store, response)
+                    //   const data = store.readQuery({
+                    //     query: ITEMS_IN_BASKET
+                    //   })
+                    //   console.log(`Current data: `, data)
+                    //   data._allItemsMeta.count++
+                    //   store.writeQuery({
+                    //     query: ITEMS_IN_BASKET,
+                    //     data
+                    //   })
+                    // }
+                  } });
+
+              case 6:
+                _this.props.data.refetch();
+
+              case 7:
+              case 'end':
+                return _context.stop();
+            }
+          }
+        }, _callee, _this2);
+      }));
+
+      return function (_x) {
+        return _ref2.apply(this, arguments);
+      };
+    }(), _temp), (0, _possibleConstructorReturn3.default)(_this, _ret);
   }
 
   (0, _createClass3.default)(ItemList, [{
-    key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps(nextProps) {}
-  }, {
     key: 'render',
     value: function render() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.props.data.loading) {
         return _react2.default.createElement('div', { className: 'flex w-100 h-100 items-center justify-center pt7', __source: {
             fileName: _jsxFileName,
-            lineNumber: 14
+            lineNumber: 11
           }
         }, _react2.default.createElement('div', {
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 15
+            lineNumber: 12
           }
         }, 'Loading data'));
       }
 
       return _react2.default.createElement('div', { className: 'w-100 flex justify-center pa6', __source: {
           fileName: _jsxFileName,
-          lineNumber: 24
+          lineNumber: 20
         }
       }, _react2.default.createElement('div', { className: 'w-100 flex flex-wrap', style: { maxWidth: 150 }, __source: {
           fileName: _jsxFileName,
-          lineNumber: 25
+          lineNumber: 21
         }
       }, this.props.data.allItems && this.props.data.allItems.map(function (item) {
         return _react2.default.createElement(_Item2.default, {
           key: item.id,
           item: item,
-          itemSelected: _this2._itemSelected,
+          itemSelected: _this3._itemSelected,
           refresh: function refresh() {
-            return _this2.props.data.refetch();
+            return _this3.props.data.refetch();
           },
           __source: {
             fileName: _jsxFileName,
-            lineNumber: 27
+            lineNumber: 23
           }
         });
       })), this.props.children);
@@ -134,4 +180,4 @@ exports.default = (0, _reactApollo.compose)((0, _reactApollo.graphql)(ALL_ITEMS,
     fetchPolicy: 'network-only'
   }
 }), (0, _reactApollo.graphql)(ADD_ITEM_TO_BASKET))(ItemList);
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbXBvbmVudHMvSXRlbUxpc3QuanMiXSwibmFtZXMiOlsiUmVhY3QiLCJJdGVtIiwiZ3FsIiwiZ3JhcGhxbCIsImNvbXBvc2UiLCJJdGVtTGlzdCIsIl9pdGVtU2VsZWN0ZWQiLCJpdGVtSWQiLCJiYXNrZXRJZCIsImxvY2FsU3RvcmFnZSIsImdldEl0ZW0iLCJjb25zb2xlIiwibG9nIiwicHJvcHMiLCJtdXRhdGUiLCJtdXRhdGlvbiIsIkFERF9JVEVNX1RPX0JBU0tFVCIsInZhcmlhYmxlcyIsIm5leHRQcm9wcyIsImRhdGEiLCJsb2FkaW5nIiwibWF4V2lkdGgiLCJhbGxJdGVtcyIsIm1hcCIsIml0ZW0iLCJpZCIsInJlZmV0Y2giLCJjaGlsZHJlbiIsIkNvbXBvbmVudCIsIkFMTF9JVEVNUyIsIm9wdGlvbnMiLCJmZXRjaFBvbGljeSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O0FBQUEsQUFBTzs7OztBQUNQLEFBQU87Ozs7QUFDUCxBQUFTLEFBQUssQUFBUzs7Ozs7Ozs7O0ksQUFFakI7Ozs7Ozs7Ozs7Ozs7O2dOQW1DSixBLGdCQUFnQixVQUFBLEFBQUMsUUFBVyxBQUUxQjs7VUFBTSxXQUFXLGFBQUEsQUFBYSxRQUE5QixBQUFpQixBQUFxQixBQUN0QztVQUFJLENBQUosQUFBSyxVQUFVLEFBQ2I7Z0JBQUEsQUFBUSxJQUNSO0FBQ0Q7QUFDRDtZQUFBLEFBQUssTUFBTCxBQUFXO2tCQUFPLEFBQ04sQUFDVjs7a0JBQVcsQUFFVDtvQkFKSixBQUFrQixBQUVMLEFBTWQ7QUFOYyxBQUNUO0FBSGMsQUFDaEI7QTs7Ozs7OEMsQUF6Q3NCLFdBQVcsQUFFcEM7Ozs2QkFFUTttQkFDUDs7VUFBSSxLQUFBLEFBQUssTUFBTCxBQUFXLEtBQWYsQUFBb0IsU0FBUyxBQUMzQjsrQkFDRSxjQUFBLFNBQUssV0FBTCxBQUFlO3NCQUFmO3dCQUFBLEFBQ0U7QUFERjtTQUFBLGtCQUNFLGNBQUE7O3NCQUFBO3dCQUFBO0FBQUE7QUFBQSxXQUZKLEFBQ0UsQUFDRSxBQUtMO0FBR0Q7OzZCQUNFLGNBQUEsU0FBSyxXQUFMLEFBQWdCO29CQUFoQjtzQkFBQSxBQUNFO0FBREY7T0FBQSxrQkFDRSxjQUFBLFNBQUssV0FBTCxBQUFlLHdCQUF1QixPQUFPLEVBQUMsVUFBOUMsQUFBNkMsQUFBVztvQkFBeEQ7c0JBQUEsQUFDRztBQURIO2NBQ0csQUFBSyxNQUFMLEFBQVcsS0FBWCxBQUFnQixpQkFBWSxBQUFLLE1BQUwsQUFBVyxLQUFYLEFBQWdCLFNBQWhCLEFBQXlCLElBQUksZ0JBQUE7K0JBQ3hELEFBQUM7ZUFDTSxLQURQLEFBQ1ksQUFDVjtnQkFGRixBQUVRLEFBQ047d0JBQWMsT0FIaEIsQUFHcUIsQUFDbkI7bUJBQVMsbUJBQUE7bUJBQU0sT0FBQSxBQUFLLE1BQUwsQUFBVyxLQUFqQixBQUFNLEFBQWdCO0FBSmpDOztzQkFBQTt3QkFEd0QsQUFDeEQ7QUFBQTtBQUNFLFNBREY7QUFITixBQUNFLEFBQytCLEFBUzlCLE9BVDhCLFNBUzlCLEFBQUssTUFaVixBQUNFLEFBV2MsQUFHakI7Ozs7O0VBakNvQixnQkFBTSxBOztBQXFEN0IsSUFBTSxZQUFBLEFBQVksc0JBQWxCOztBQVVBLElBQU0scUJBQUEsQUFBcUIsc0JBQTNCLEFBVUE7O3NFQUNFLEFBQVE7O2lCQURLLEFBQ2IsQUFBbUIsQUFDUixBQUNNO0FBRE4sQUFDUDtBQUZlLEFBQ2pCLENBREYsQ0FEYSxFQU1iLDBCQU5hLEFBTWIsQUFBUSxxQkFOVixBQUFlLEFBT2IiLCJmaWxlIjoiSXRlbUxpc3QuanMiLCJzb3VyY2VSb290IjoiL1VzZXJzL25idXJrL1Byb2plY3RzL2dyYXBoY29vbC9leGFtcGxlcy9uZXh0L3dpdGgtYXBvbGxvIn0=
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbXBvbmVudHMvSXRlbUxpc3QuanMiXSwibmFtZXMiOlsiUmVhY3QiLCJJdGVtIiwiZ3FsIiwiZ3JhcGhxbCIsImNvbXBvc2UiLCJJdGVtTGlzdCIsIl9pdGVtU2VsZWN0ZWQiLCJpdGVtSWQiLCJiYXNrZXRJZCIsImxvY2FsU3RvcmFnZSIsImdldEl0ZW0iLCJjb25zb2xlIiwibG9nIiwicHJvcHMiLCJtdXRhdGUiLCJtdXRhdGlvbiIsIkFERF9JVEVNX1RPX0JBU0tFVCIsInZhcmlhYmxlcyIsImRhdGEiLCJyZWZldGNoIiwibG9hZGluZyIsIm1heFdpZHRoIiwiYWxsSXRlbXMiLCJtYXAiLCJpdGVtIiwiaWQiLCJjaGlsZHJlbiIsIkNvbXBvbmVudCIsIkFMTF9JVEVNUyIsIm9wdGlvbnMiLCJmZXRjaFBvbGljeSJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxBQUFPOzs7O0FBQ1AsQUFBTzs7OztBQUNQLEFBQVMsQUFBSyxBQUFTOzs7Ozs7Ozs7QUFDdkI7O0ksQUFFTTs7Ozs7Ozs7Ozs7Ozs7O2dOQThCSixBOzJGQUFnQixpQkFBQSxBQUFPLFFBQVA7WUFBQTtzRUFBQTtvQkFBQTs2Q0FBQTttQkFFUjtBQUZRLDJCQUVHLGFBQUEsQUFBYSxRQUZoQixBQUVHLEFBQXFCOztvQkFGeEIsQUFHVCxVQUhTO2tDQUFBO0FBQUE7QUFJWjs7d0JBQUEsQUFBUSxJQUpJO3VDQUFBOzttQkFBQTtnQ0FBQTs2QkFPUixBQUFLLE1BQUwsQUFBVzs0QkFBTyxBQUNaLEFBQ1Y7OzRCQUFXLEFBRVQ7OEJBRlMsQUFJWDtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBO0FBQ0E7QUF4QlksQUFPUixBQUFrQjtBQUVYLEFBQ1QsbUJBSG9CLEFBQ3RCLEVBREk7O21CQW1CTjtzQkFBQSxBQUFLLE1BQUwsQUFBVyxLQTFCRyxBQTBCZCxBQUFnQjs7bUJBMUJGO21CQUFBO2dDQUFBOztBQUFBO29CQUFBO0E7Ozs7Ozs7Ozs7NkJBNUJQO21CQUNQOztVQUFJLEtBQUEsQUFBSyxNQUFMLEFBQVcsS0FBZixBQUFvQixTQUFTLEFBQzNCOytCQUNFLGNBQUEsU0FBSyxXQUFMLEFBQWU7c0JBQWY7d0JBQUEsQUFDRTtBQURGO1NBQUEsa0JBQ0UsY0FBQTs7c0JBQUE7d0JBQUE7QUFBQTtBQUFBLFdBRkosQUFDRSxBQUNFLEFBS0w7QUFFRDs7NkJBQ0UsY0FBQSxTQUFLLFdBQUwsQUFBZ0I7b0JBQWhCO3NCQUFBLEFBQ0U7QUFERjtPQUFBLGtCQUNFLGNBQUEsU0FBSyxXQUFMLEFBQWUsd0JBQXVCLE9BQU8sRUFBQyxVQUE5QyxBQUE2QyxBQUFXO29CQUF4RDtzQkFBQSxBQUNHO0FBREg7Y0FDRyxBQUFLLE1BQUwsQUFBVyxLQUFYLEFBQWdCLGlCQUFZLEFBQUssTUFBTCxBQUFXLEtBQVgsQUFBZ0IsU0FBaEIsQUFBeUIsSUFBSSxnQkFBQTsrQkFDeEQsQUFBQztlQUNNLEtBRFAsQUFDWSxBQUNWO2dCQUZGLEFBRVEsQUFDTjt3QkFBYyxPQUhoQixBQUdxQixBQUNuQjttQkFBUyxtQkFBQTttQkFBTSxPQUFBLEFBQUssTUFBTCxBQUFXLEtBQWpCLEFBQU0sQUFBZ0I7QUFKakM7O3NCQUFBO3dCQUR3RCxBQUN4RDtBQUFBO0FBQ0UsU0FERjtBQUhOLEFBQ0UsQUFDK0IsQUFTOUIsT0FUOEIsU0FTOUIsQUFBSyxNQVpWLEFBQ0UsQUFXYyxBQUdqQjs7Ozs7RUE1Qm9CLGdCLEFBQU07O0FBNkQ3QixJQUFNLFlBQUEsQUFBWSxzQkFBbEI7O0FBVUEsSUFBTSxxQkFBQSxBQUFxQixzQkFBM0IsQUFVQTs7c0VBQ0UsQUFBUTs7aUJBREssQUFDYixBQUFtQixBQUNSLEFBQ007QUFETixBQUNQO0FBRmUsQUFDakIsQ0FERixDQURhLEVBTWIsMEJBTmEsQUFNYixBQUFRLHFCQU5WLEFBQWUsQUFPYiIsImZpbGUiOiJJdGVtTGlzdC5qcyIsInNvdXJjZVJvb3QiOiIvVXNlcnMvbmJ1cmsvUHJvamVjdHMvZ3JhcGhjb29sL2V4YW1wbGVzL25leHQvZ2Mtd2Vic2hvcCJ9

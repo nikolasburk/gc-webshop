@@ -47,37 +47,36 @@ export default class Auth {
     this.auth0.authorize()
   }
 
-  handleAuthentication(props) {
+   handleAuthentication(props) {
     console.log(`Auth - handleAuthentication`)
 
     if (process.browser) {
 
-      this.auth0.parseHash({hash: window.location.hash}, (err, authResult) => {
+      this.auth0.parseHash({hash: window.location.hash}, async (err, authResult) => {
         if (authResult && authResult.accessToken && authResult.idToken) {
           this.setSession(authResult)
           console.log(`Received auth result`, authResult)
           const {idToken, accessToken } = authResult
-          client.mutate({
+          const authenticateUserResponse = await client.mutate({
             mutation: AUTHENTICATE_USER,
             variables: {
               idToken,
               accessToken
             }
-          }).then(response => {
-            console.log(`Received response (authenticateAuth0User): `, response)
-            localStorage.setItem('gc-webshop-token', response.data.authenticateAuth0User.token)
-            client.mutate({
-              mutation: CREATE_BASKET,
-              variables: { userId: response.data.authenticateAuth0User.userId}
-            }).then(reponse => {
-              console.log(`Received response (createBasket): `, response)
-              localStorage.setItem('gc-webshop-basket', response.data.createBasket.id)
-              props.url.push('/')
-            })
-          }).catch(error => {
-            console.log(`ERROR: `, error)
-            props.url.push('/')
           })
+          localStorage.setItem('gc-webshop-token', authenticateUserResponse.data.authenticateAuth0User.token)
+          localStorage.setItem('gc-webshop-userid', authenticateUserResponse.data.authenticateAuth0User.userId)
+
+          console.log(`received authenticateUserResponse: `, authenticateUserResponse)
+          const createBasketResponse = await client.mutate({
+            mutation: CREATE_BASKET,
+            variables: {
+              userId: authenticateUserResponse.data.authenticateAuth0User.userId
+            }
+          })
+          localStorage.setItem('gc-webshop-basket', createBasketResponse.data.createBasket.id)
+          props.url.push('/')
+
         } else if (err) {
             props.url.push('/')
           console.log(err)
@@ -101,7 +100,6 @@ export default class Auth {
     localStorage.removeItem('access_token')
     localStorage.removeItem('id_token')
     localStorage.removeItem('expires_at')
-
   }
 
   isAuthenticated() {

@@ -30,7 +30,7 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var _jsxFileName = '/Users/nburk/Projects/graphcool/examples/next/with-apollo/components/Item.js';
+var _jsxFileName = '/Users/nburk/Projects/graphcool/examples/next/gc-webshop/components/Item.js';
 
 
 var Item = function (_React$Component) {
@@ -47,11 +47,12 @@ var Item = function (_React$Component) {
     value: function render() {
       var _this2 = this;
 
+      var token = process.browser ? localStorage.getItem('gc-webshop-token') : null;
       return _react2.default.createElement('div', {
         className: 'bg-white ma3 box post flex flex-column no-underline br2',
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 7
+          lineNumber: 8
         }
       }, _react2.default.createElement('div', {
         className: 'image',
@@ -63,17 +64,17 @@ var Item = function (_React$Component) {
         },
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 10
+          lineNumber: 11
         }
       }), _react2.default.createElement('div', { className: 'flex items-center black-80 fw3 description', __source: {
           fileName: _jsxFileName,
-          lineNumber: 19
+          lineNumber: 20
         }
-      }, this.props.item.name), _react2.default.createElement('div', { onClick: function onClick() {
+      }, this.props.item.name), token && _react2.default.createElement('div', { onClick: function onClick() {
           _this2.props.itemSelected(_this2.props.item.id);
         }, __source: {
           fileName: _jsxFileName,
-          lineNumber: 22
+          lineNumber: 23
         }
       }, 'Add to basket'));
     }
@@ -83,4 +84,4 @@ var Item = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = Item;
-//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbXBvbmVudHMvSXRlbS5qcyJdLCJuYW1lcyI6WyJSZWFjdCIsIkl0ZW0iLCJiYWNrZ3JvdW5kSW1hZ2UiLCJwcm9wcyIsIml0ZW0iLCJpbWFnZVVybCIsImJhY2tncm91bmRTaXplIiwiYmFja2dyb3VuZFBvc2l0aW9uIiwicGFkZGluZ0JvdHRvbSIsIm5hbWUiLCJpdGVtU2VsZWN0ZWQiLCJpZCIsIkNvbXBvbmVudCJdLCJtYXBwaW5ncyI6Ijs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7QUFBQSxBQUFPOzs7Ozs7Ozs7SSxBQUVEOzs7Ozs7Ozs7Ozs2QkFFSzttQkFDUDs7NkJBQ0UsY0FBQTttQkFBQSxBQUNZOztvQkFEWjtzQkFBQSxBQUdFO0FBSEY7QUFDRSxPQURGO21CQUdFLEFBQ1ksQUFDVjs7b0NBQzBCLEtBQUEsQUFBSyxNQUFMLEFBQVcsS0FBbkMsQUFBd0MsV0FEbkMsQUFFTDswQkFGSyxBQUVXLEFBQ2hCOzhCQUhLLEFBR2UsQUFDcEI7eUJBTkosQUFFUyxBQUlVO0FBSlYsQUFDTDs7b0JBSEo7c0JBSEYsQUFHRSxBQVNBO0FBVEE7QUFDRSwwQkFRRixjQUFBLFNBQUssV0FBTCxBQUFlO29CQUFmO3NCQUFBLEFBQ0c7QUFESDtjQUNHLEFBQUssTUFBTCxBQUFXLEtBYmhCLEFBWUUsQUFDbUIsQUFFbkIsdUJBQUEsY0FBQSxTQUFLLFNBQVMsbUJBQU0sQUFDbEI7aUJBQUEsQUFBSyxNQUFMLEFBQVcsYUFBYSxPQUFBLEFBQUssTUFBTCxBQUFXLEtBQW5DLEFBQXdDLEFBQ3pDO0FBRkQ7b0JBQUE7c0JBQUE7QUFBQTtTQWhCSixBQUNFLEFBZUUsQUFLTDs7Ozs7RUF4QmdCLGdCQUFNLEEsQUE0QnpCOztrQkFBQSxBQUFlIiwiZmlsZSI6Ikl0ZW0uanMiLCJzb3VyY2VSb290IjoiL1VzZXJzL25idXJrL1Byb2plY3RzL2dyYXBoY29vbC9leGFtcGxlcy9uZXh0L3dpdGgtYXBvbGxvIn0=
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImNvbXBvbmVudHMvSXRlbS5qcyJdLCJuYW1lcyI6WyJSZWFjdCIsIkl0ZW0iLCJ0b2tlbiIsInByb2Nlc3MiLCJicm93c2VyIiwibG9jYWxTdG9yYWdlIiwiZ2V0SXRlbSIsImJhY2tncm91bmRJbWFnZSIsInByb3BzIiwiaXRlbSIsImltYWdlVXJsIiwiYmFja2dyb3VuZFNpemUiLCJiYWNrZ3JvdW5kUG9zaXRpb24iLCJwYWRkaW5nQm90dG9tIiwibmFtZSIsIml0ZW1TZWxlY3RlZCIsImlkIiwiQ29tcG9uZW50Il0sIm1hcHBpbmdzIjoiOzs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7OztBQUFBLEFBQU87Ozs7Ozs7OztJQUVELEE7Ozs7Ozs7Ozs7OzZCQUVLO21CQUNQOztVQUFNLFFBQVEsUUFBQSxBQUFRLFVBQVUsYUFBQSxBQUFhLFFBQS9CLEFBQWtCLEFBQXFCLHNCQUFyRCxBQUEyRSxBQUMzRTs2QkFDRSxjQUFBO21CQUFBLEFBQ1k7O29CQURaO3NCQUFBLEFBR0U7QUFIRjtBQUNFLE9BREY7bUJBR0UsQUFDWSxBQUNWOztvQ0FDMEIsS0FBQSxBQUFLLE1BQUwsQUFBVyxLQUFuQyxBQUF3QyxXQURuQyxBQUVMOzBCQUZLLEFBRVcsQUFDaEI7OEJBSEssQUFHZSxBQUNwQjt5QkFOSixBQUVTLEFBSVU7QUFKVixBQUNMOztvQkFISjtzQkFIRixBQUdFLEFBU0E7QUFUQTtBQUNFLDBCQVFGLGNBQUEsU0FBSyxXQUFMLEFBQWU7b0JBQWY7c0JBQUEsQUFDRztBQURIO2NBQ0csQUFBSyxNQUFMLEFBQVcsS0FiaEIsQUFZRSxBQUNtQixBQUVsQixnQ0FBUyxjQUFBLFNBQUssU0FBUyxtQkFBTSxBQUM1QjtpQkFBQSxBQUFLLE1BQUwsQUFBVyxhQUFhLE9BQUEsQUFBSyxNQUFMLEFBQVcsS0FBbkMsQUFBd0MsQUFDekM7QUFGUztvQkFBQTtzQkFBQTtBQUFBO09BQUEsRUFoQmQsQUFDRSxBQWVZLEFBS2Y7Ozs7O0VBekJnQixnQkFBTSxBLEFBNkJ6Qjs7a0JBQUEsQUFBZSIsImZpbGUiOiJJdGVtLmpzIiwic291cmNlUm9vdCI6Ii9Vc2Vycy9uYnVyay9Qcm9qZWN0cy9ncmFwaGNvb2wvZXhhbXBsZXMvbmV4dC9nYy13ZWJzaG9wIn0=
