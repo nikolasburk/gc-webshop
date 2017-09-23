@@ -44,7 +44,7 @@ const query = `mutation {
     name: "A House"
     description: "Why not just buy a proper house?"
     price: 910000
-    imageUrl: "https://www.google.com/url?sa=i&rct=j&q=&esrc=s&source=images&cd=&cad=rja&uact=8&ved=0ahUKEwiFu5-y0LnWAhXDYlAKHb_wCUoQjRwIBw&url=https%3A%2F%2Fwww.pinterest.com%2Fexplore%2Fhouses%2F&psig=AFQjCNHWeDFYHpmzfbBYhPYjNXrDXaHikQ&ust=1506198389951745"
+    imageUrl: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Pyramid_of_Khafre_Giza_Egypt_in_2015_2.jpg/460px-Pyramid_of_Khafre_Giza_Egypt_in_2015_2.jpg"
     ratingInfo: {
       averageRating: 4
       count: 1
