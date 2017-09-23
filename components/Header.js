@@ -38,12 +38,26 @@ const header = ({ pathname, login, data }) => {
         }
         .right {
           display: flex;
+          cursor: pointer;
+          padding: 16px;
+        }
+        .basket {
+          margin-right: 25px;
         }
       `}</style>
       <Link prefetch href="/">
         <h1>Graphcool Webshop</h1>
       </Link>
       <div className="right">
+        {token && (
+          <div className="basket">
+            <Link prefetch href="/checkout">
+              <a className={pathname === '/' && 'is-active'}>
+                {itemCount} items in basket
+              </a>
+            </Link>
+          </div>
+        )}
         {!token ? (
           <div
             onClick={() => {
@@ -63,13 +77,6 @@ const header = ({ pathname, login, data }) => {
           >
             Logout
           </div>
-        )}
-        {token && (
-          <Link prefetch href="/checkout">
-            <a className={pathname === '/' && 'is-active'}>
-              {itemCount} items in basket
-            </a>
-          </Link>
         )}
       </div>
     </header>

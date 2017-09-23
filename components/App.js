@@ -34,6 +34,24 @@ export default ({ children }) => (
       button:focus {
         outline: none;
       }
+      .button {
+        display: inline-block;
+        padding: 12px 16px;
+        border-radius: 2px;
+        background: rgba(42, 126, 210, 1);
+        color: white;
+        cursor: pointer;
+      }
+      .button:hover {
+        background: rgba(29, 96, 162, 1);
+      }
+      .button.red {
+        background: rgba(242, 92, 84, 1);
+      }
+      .button.red:hover {
+        background: rgba(242, 92, 84, 1);
+      }
+
     `}</style>
   </main>
 )

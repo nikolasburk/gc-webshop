@@ -3,6 +3,10 @@ import React from 'react'
 import StripeCheckout from 'react-stripe-checkout'
 // GraphQL
 import { graphql, compose, gql } from 'react-apollo'
+import Item from './Item'
+import {auth} from '../pages/index'
+import Header from './Header'
+import App from './App'
 
 class Stripe extends React.Component {
 
@@ -45,41 +49,59 @@ class Stripe extends React.Component {
       this.props.itemsInBasket.Basket.items.reduce((acc, curr) => acc + curr.price, 0) : 0
 
     return (
-      <div>
-        <div>
-          <div>Items:</div>
-          {this.props.itemsInBasket && this.props.itemsInBasket.Basket &&
-          this.renderItems(this.props.itemsInBasket.Basket.items)
-          }
-          <b>SUM: ${amount}</b>
+      <App>
+        <Header login={auth.login} pathname={this.props.url.pathname} />
+        <div className="cart">
+          <style jsx={true}>{`
+            .cart {
+              margin-left: 25px;
+            }
+            .sum {
+              padding: 16px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              max-width: 500px;
+              margin-bottom: 25px;
+            }
+          `}</style>
+          <div>
+            <h1>Shopping Cart</h1>
+            {this.props.itemsInBasket && this.props.itemsInBasket.Basket &&
+            this.renderItems(this.props.itemsInBasket.Basket.items)
+            }
+          </div>
+          <StripeCheckout
+            name="Graphcool Webshop"
+            description="It’s super duper awesome."
+            ComponentClass="div"
+            panelLabel="Amount"
+            amount={amount * 100}
+            currency="USD"
+            stripeKey="pk_test_e8KuPYHUCxyz68Vk3fHBCrVw"
+            email={this.props.data.Auth0User.email}
+            shippingAddress={false}
+            billingAddress={false}
+            zipCode={false}
+            bitcoin
+            allowRememberMe
+            token={this.onToken}
+            reconfigureOnUpdate={false}
+            triggerEvent="onClick"
+          >
+            <div className="sum">
+              <b>SUM: ${amount}</b>
+              <div className="button">Checkout</div>
+            </div>
+          </StripeCheckout>
         </div>
-        <StripeCheckout
-          name="My Demo App"
-          description="It’s super duper awesome."
-          ComponentClass="div"
-          panelLabel="Amount"
-          amount={amount * 100}
-          currency="USD"
-          stripeKey="pk_test_e8KuPYHUCxyz68Vk3fHBCrVw"
-          email={this.props.data.Auth0User.email}
-          shippingAddress={false}
-          billingAddress={true}
-          zipCode={true}
-          bitcoin
-          allowRememberMe
-          token={this.onToken}
-          reconfigureOnUpdate={false}
-          triggerEvent="onClick"
-        >
-          <div style={{background: 'rgba(0,0,0,.1)', borderRadius: 2, padding: '2px 6px', display: 'inline-block', cursor: 'pointer', fontSize: 16}}>Go for it!</div>
-        </StripeCheckout>
-      </div>
+      </App>
     )
   }
 
   renderItems(items) {
     console.log('items', items)
-    return items.map(item => <div><b>{item.name}</b>: ${item.price}</div>)
+    return items.map(item => <Item inBasket={true} item={item} />)
   }
 }
 

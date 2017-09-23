@@ -17,17 +17,25 @@ class ItemList extends React.Component {
     }
 
     return (
-      <div className={'w-100 flex justify-center pa6'}>
-        <div className='w-100 flex flex-wrap' style={{maxWidth: 150}}>
-          {this.props.data.allItems && this.props.data.allItems.map(item => (
-            <Item
-              key={item.id}
-              item={item}
-              itemSelected={this._itemSelected}
-              refresh={() => this.props.data.refetch()}
-            />
-          ))}
-        </div>
+      <div className={'items'}>
+        <h1>Items</h1>
+        <style jsx={true}>{`
+          h1 {
+
+          }
+          .items {
+            margin: 25px;
+          }
+        `}</style>
+        {this.props.data.allItems && this.props.data.allItems.map(item => (
+          <Item
+            key={item.id}
+            item={item}
+            itemSelected={this._itemSelected}
+            refresh={() => this.props.data.refetch()}
+            showRating={true}
+          />
+        ))}
         {this.props.children}
       </div>
     )
@@ -45,21 +53,12 @@ class ItemList extends React.Component {
       variables: {
         itemId,
         basketId
-      },
-      // update: (store, response) => {
-      //   console.log(`update store`, store, response)
-      //   const data = store.readQuery({
-      //     query: ITEMS_IN_BASKET
-      //   })
-      //   console.log(`Current data: `, data)
-      //   data._allItemsMeta.count++
-      //   store.writeQuery({
-      //     query: ITEMS_IN_BASKET,
-      //     data
-      //   })
-      // }
+      }
     })
-    this.props.data.refetch()
+    if (typeof window !== 'undefined') {
+      this.props.data.refetch()
+      window.location.pathname = '/'
+    }
 
   }
 }
@@ -71,6 +70,10 @@ const ALL_ITEMS = gql`query AllItems {
     price
     imageUrl
     description
+    ratingInfo {
+      count
+      averageRating
+    }
   }
 }`
 
