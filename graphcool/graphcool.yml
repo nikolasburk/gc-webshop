@@ -11,78 +11,21 @@ functions:
     type: resolver
     schema: ./src/pay.graphql
 
-  sendConfirmEmail:
-    handler:
-      code:
-        src: ./src/sendConfirmEmail.js
-        environment:
-          MAILGUN_API_KEY: ${env:MAILGUN_API_KEY}
-          MAILGUN_DOMAIN: ${env:MAILGUN_DOMAIN}
-    type: subscription
-    query: ./src/sendConfirmEmail.graphql
+#   sendConfirmEmail:
+#     handler:
+#       code:
+#         src: ./src/sendConfirmEmail.js
+#         environment:
+#           MAILGUN_API_KEY: ${env:MAILGUN_API_KEY}
+#           MAILGUN_DOMAIN: ${env:MAILGUN_DOMAIN}
+#     type: subscription
+#     query: ./src/sendConfirmEmail.graphql
 
 modules:
   auth0: modules/auth0/graphcool.yml
 
-# Model/Relation permissions
 permissions:
   - operation: "*"
-#  # Basket permissions
-#  - operation: Basket.create
-#    authenticated: true
-#  - operation: Basket.read
-#    authenticated: true
-#    query: permissions/Basket.graphql
-#  - operation: Basket.update
-#    authenticated: true
-#    query: permissions/Basket.graphql
-#  - operation: Basket.delete
-#    authenticated: true
-#    query: permissions/Basket.graphql
-#
-#  # Item permissions
-#  - operation: Item.read
-#  - operation: Item.create
-#    authenticated: true
-#    query: permissions/Item.graphql
-#  - operation: Item.update
-#    authenticated: true
-#    query: permissions/Item.graphql
-#  - operation: Item.delete
-#    authenticated: true
-#    query: permissions/Item.graphql
-#
-#  # Order permissions
-#  - operation: Order.read
-#    authenticated: true
-#    query: permissions/Order.read.graphql
-#  - operation: Order.create
-#    authenticated: true
-#    query: permissions/Order.create.graphql
-#  - operation: Order.update
-#    authenticated: true
-#    query: permissions/Order.update-delete.graphql
-#  - operation: Order.delete
-#    authenticated: true
-#    query: permissions/Order.update-delete.graphql
-#
-#  # User permissions
-#  - operation: Auth0User.read
-#    authenticated: true
-#  - operation: Auth0User.create
-#  - operation: Auth0User.update
-#    authenticated: true
-#    query: permissions/User.update-delete.graphql
-#  - operation: Auth0User.delete
-#    authenticated: true
-#    query: permissions/User.update-delete.graphql
-#
-#  # Relation Permissions
-#  - operation: ItemsInBasket.*
-#  - operation: ItemRatingInfo.*
-#  - operation: BasketForOrder.*
-#  - operation: UserBaskets.*
-#  - operation: UserOrders.*
 
 rootTokens: []
 
