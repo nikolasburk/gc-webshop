@@ -11,15 +11,15 @@ functions:
     type: resolver
     schema: ./src/pay.graphql
 
-#   sendConfirmEmail:
-#     handler:
-#       code:
-#         src: ./src/sendConfirmEmail.js
-#         environment:
-#           MAILGUN_API_KEY: ${env:MAILGUN_API_KEY}
-#           MAILGUN_DOMAIN: ${env:MAILGUN_DOMAIN}
-#     type: subscription
-#     query: ./src/sendConfirmEmail.graphql
+  sendConfirmEmail:
+    handler:
+      code:
+        src: ./src/sendConfirmEmail.js
+        environment:
+          MAILGUN_API_KEY: ${env:MAILGUN_API_KEY}
+          MAILGUN_DOMAIN: ${env:MAILGUN_DOMAIN}
+    type: subscription
+    query: ./src/sendConfirmEmail.graphql
 
 modules:
   auth0: modules/auth0/graphcool.yml

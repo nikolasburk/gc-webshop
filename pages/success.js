@@ -1,4 +1,7 @@
+import Confetti from 'react-confetti'
 
 export default props => {
-  return <div>AWESOME!</div>
+  return (
+    <Confetti width={process.browser ? window.innerWidth : '100%'} height={process.browser ? window.innerHeight : '100%'} />
+  )
 }

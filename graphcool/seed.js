@@ -5,10 +5,23 @@ const query = `mutation {
     name: "iPhone X"
     description: "The new iPhone"
     price: 1300
-    imageUrl: "https://pbs.twimg.com/media/DKQQVvUXoAAd6Es.jpg"
+    imageUrl: "https://icdn2.digitaltrends.com/image/iphone-x-press-220x220.jpg"
     ratingInfo: {
       averageRating: 5
       count: 10
+    }
+  ) {
+    id
+  }
+  
+  ive: createItem(
+    name: "John Ive X"
+    description: "New generation of haircuts"
+    price: 1300
+    imageUrl: "https://pbs.twimg.com/media/DKQQVvUXoAAd6Es.jpg"
+    ratingInfo: {
+      averageRating: 9001
+      count: 100
     }
   ) {
     id

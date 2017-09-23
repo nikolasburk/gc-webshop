@@ -19,7 +19,7 @@ module.exports = event => {
 
   const node = event.data.Order.node
 
-  const from = 'test@example.com'
+  const from = 'order@amazon.com'
   const to = node.user.email
   const subject = 'Your order is confirmed'
   const text = `Congratulations. We've received your order.`

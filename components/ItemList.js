@@ -18,25 +18,28 @@ class ItemList extends React.Component {
 
     return (
       <div className={'items'}>
-        <h1>Items</h1>
         <style jsx={true}>{`
-          h1 {
-
-          }
           .items {
             margin: 25px;
           }
+          .subitems {
+            display: flex;
+            flex-wrap: wrap;
+          }
         `}</style>
-        {this.props.data.allItems && this.props.data.allItems.map(item => (
-          <Item
-            key={item.id}
-            item={item}
-            itemSelected={this._itemSelected}
-            refresh={() => this.props.data.refetch()}
-            showRating={true}
-          />
-        ))}
-        {this.props.children}
+        <h1>Items</h1>
+        <div className='subitems'>
+          {this.props.data.allItems && this.props.data.allItems.map(item => (
+            <Item
+              key={item.id}
+              item={item}
+              itemSelected={this._itemSelected}
+              refresh={() => this.props.data.refetch()}
+              showRating={true}
+            />
+          ))}
+          {this.props.children}
+        </div>
       </div>
     )
   }
@@ -57,7 +60,7 @@ class ItemList extends React.Component {
     })
     if (typeof window !== 'undefined') {
       this.props.data.refetch()
-      window.location.pathname = '/'
+      window.location.reload()
     }
 
   }

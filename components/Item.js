@@ -12,15 +12,17 @@ class Item extends React.Component {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 25px;
+            margin-top: 25px;
+            margin-right: 25px;
+            width: 50%;
             max-width: 600px;
             background: rgba(0, 0, 0, 0.05);
             padding: 25px;
             border-radius: 2px;
           }
           .image {
-            width: 100px;
-            height: 100px;
+            width: 200px;
+            height: 200px;
           }
         `}</style>
         <div
