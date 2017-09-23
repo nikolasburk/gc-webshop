@@ -5,7 +5,7 @@ functions:
   pay:
     handler:
       webhook:
-        url: https://graphcool-webshop-nmgluvhyph.now.sh
+        url: ${env:NOW_URL}
         headers:
           Content-Type: application/json
     type: resolver
