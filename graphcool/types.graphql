@@ -5,11 +5,18 @@
 type Item {
   id: ID! @isUnique
   name: String!
-  inBasket: [Basket!]! @relation(name: "ItemsInBasket")
   description: String
   imageUrl: String
   price: Int!
   ratingInfo: RatingInfo @relation(name: "ItemRatingInfo")
+  inBasket: [Basket!]! @relation(name: "ItemsInBasket")
+}
+
+type RatingInfo {
+  id: ID! @isUnique
+  count: Int!
+  averageRating: Float!
+  item: Item! @relation(name: "ItemRatingInfo")
 }
 
 type Basket {
@@ -30,11 +37,4 @@ type Order {
 
   deliveredAt: DateTime
   orderedAt: DateTime
-}
-
-type RatingInfo {
-  id: ID! @isUnique
-  count: Int!
-  averageRating: Float!
-  item: Item! @relation(name: "ItemRatingInfo")
 }
