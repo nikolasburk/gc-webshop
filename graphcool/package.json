@@ -7,7 +7,8 @@
     "src"
   ],
   "scripts": {
-    "start": "micro"
+    "start": "micro",
+    "seed": "node seed.js"
   },
   "keywords": [],
   "author": "",
