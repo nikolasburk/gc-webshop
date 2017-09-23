@@ -24,7 +24,7 @@ const header = ({ pathname, login, data }) => {
           }}>logout</div>)
       }
       {token &&
-      <Link prefetch href='/basket'>
+      <Link prefetch href='/checkout'>
         <a className={pathname === '/' && 'is-active'}>{itemCount} items in basket</a>
       </Link>
       }
