@@ -101,7 +101,7 @@ class Stripe extends React.Component {
 
   renderItems(items) {
     console.log('items', items)
-    return items.map(item => <Item inBasket={true} item={item} />)
+    return items.map(item => <Item key={item.id} inBasket={true} item={item} />)
   }
 }
 

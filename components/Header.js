@@ -86,6 +86,7 @@ const header = ({ pathname, login, data }) => {
 export const ITEMS_IN_BASKET = gql`
   query ItemsInBasket($basketId: ID) {
     Basket(id: $basketId) {
+      id
       _itemsMeta {
         count
       }
